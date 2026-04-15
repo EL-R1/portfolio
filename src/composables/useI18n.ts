@@ -1,6 +1,16 @@
 import { ref, watch } from 'vue'
 
-const translations = {
+type Lang = 'fr' | 'en'
+
+interface Translations {
+  [key: string]: string | string[] | undefined
+}
+
+interface TranslationsSet {
+  [key: string]: Translations
+}
+
+const translations: TranslationsSet = {
   fr: {
     greeting: 'Bonjour, je suis',
     tagline: "Concepteur et développeur d'applications",
@@ -68,7 +78,7 @@ const translations = {
     ],
     projTestsTitle: 'Moteur de Tests Automatisés',
     projTestsDesc: "Création d'un moteur de test avec entrée JSON et sortie fonctionnelle pour les business analysts, automatisation quotidienne via Azure DevOps.",
-    projTestsContext: "Manitou Group avait besoin de tester toutes ses solutions en interne. Ils avaient un prestataire qui rendait ses tests payant et limité par mois. Le but est d'avoir en entrée et en sorti des résultats le moins technique possible et le plus fonctionnel possible comme cette partie de gestion de tests est orienté pour les business analysts.",
+    projTestsContext: "Manitou Group avait besoin de tester toutes ses solutions en interne. Ils avaient un prestataire qui rendait ses tests payable et limité par mois. Le but est d'avoir en entrée et en sorti des résultats le moins technique possible et le plus fonctionnel possible comme cette partie de gestion de tests est orienté pour les business analysts.",
     projTestsObjectives: [
       "Créer un moteur de test qui puisse prendre en entrée des cas de tests sous format JSON",
       "Pouvoir afficher en sortie les résultats de façon clair et fonctionnel",
@@ -156,7 +166,11 @@ const translations = {
     modalContext: 'Contexte',
     modalObjectives: 'Objectifs',
     modalTechnologies: 'Compétences et technologies',
-    modalRealizations: 'Réalisations globales'
+    modalRealizations: 'Réalisations globales',
+    ariaNav: 'Navigation principale',
+    ariaLogo: 'Erwan LEBLANC - Accueil',
+    ariaMobileMenu: 'Menu mobile',
+    ariaMainActions: 'Actions principales'
   },
   en: {
     greeting: "Hello, I'm",
@@ -313,23 +327,42 @@ const translations = {
     modalContext: 'Context',
     modalObjectives: 'Objectives',
     modalTechnologies: 'Skills & Technologies',
-    modalRealizations: 'Overall Achievements'
+    modalRealizations: 'Overall Achievements',
+    ariaNav: 'Main navigation',
+    ariaLogo: 'Erwan LEBLANC - Home',
+    ariaMobileMenu: 'Mobile menu',
+    ariaMainActions: 'Main actions'
   }
 }
 
-const currentLang = ref(localStorage.getItem('lang') || 'fr')
+const currentLang = ref<Lang>(localStorage.getItem('lang') as Lang || 'fr')
 
 watch(currentLang, (val) => {
   localStorage.setItem('lang', val)
 })
 
 export function useI18n() {
-  const t = (key) => translations[currentLang.value][key] || key
-  const setLang = (lang) => currentLang.value = lang
+  const t = (key: string): string => translations[currentLang.value][key] as string || key
+  const setLang = (lang: Lang) => currentLang.value = lang
+  
+  const getThemeAriaLabel = (isDark: boolean): string => {
+    return isDark 
+      ? (currentLang.value === 'fr' ? 'Passer en mode clair' : 'Switch to light mode')
+      : (currentLang.value === 'fr' ? 'Passer en mode sombre' : 'Switch to dark mode')
+  }
+  
+  const getLangAriaLabel = (currentLangValue: Lang): string => {
+    return currentLangValue === 'fr' 
+      ? 'Passer en anglais' 
+      : 'Passer en français'
+  }
+  
   return { 
     t, 
     lang: currentLang, 
     setLang,
-    toggleLang: () => currentLang.value = currentLang.value === 'fr' ? 'en' : 'fr'
+    toggleLang: () => currentLang.value = currentLang.value === 'fr' ? 'en' : 'fr',
+    getThemeAriaLabel,
+    getLangAriaLabel
   }
 }

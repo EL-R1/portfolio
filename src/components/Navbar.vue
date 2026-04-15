@@ -4,7 +4,7 @@ import { useTheme } from '../composables/useTheme'
 import { useI18n } from '../composables/useI18n'
 
 const { isDark, toggleTheme } = useTheme()
-const { t, lang, toggleLang } = useI18n()
+const { t, lang, toggleLang, getThemeAriaLabel, getLangAriaLabel } = useI18n()
 const isScrolled = ref(false)
 const isMobileMenuOpen = ref(false)
 const activeSection = ref('hero')
@@ -52,30 +52,37 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <nav :class="['navbar', { scrolled: isScrolled }]">
+  <nav :class="['navbar', { scrolled: isScrolled }]" role="navigation" :aria-label="t('ariaNav')">
     <div class="container">
-      <a href="#" class="logo">EL</a>
+      <a href="#" class="logo" :aria-label="t('ariaLogo')">EL</a>
       
-      <div class="nav-links desktop">
+      <div class="nav-links desktop" role="menubar">
         <a 
           v-for="link in navLinks" 
           :key="link.name" 
           :href="link.href"
           :class="{ active: activeSection === link.id }"
+          role="menuitem"
           @click="handleLinkClick($event, link.href)"
         >{{ link.name }}</a>
       </div>
 
       <div class="nav-actions">
-        <button @click="toggleTheme" class="theme-toggle" :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'">
-          <span v-if="isDark">☀️</span>
-          <span v-else>🌙</span>
+        <button @click="toggleTheme" class="theme-toggle" :aria-label="getThemeAriaLabel(isDark)">
+          <span v-if="isDark" aria-hidden="true">☀️</span>
+          <span v-else aria-hidden="true">🌙</span>
         </button>
-        <button @click="toggleLang" class="lang-toggle" :aria-label="lang === 'fr' ? 'Switch to English' : 'Passer en français'">
+        <button @click="toggleLang" class="lang-toggle" :aria-label="getLangAriaLabel(lang)">
           {{ lang.toUpperCase() }}
         </button>
         
-        <button class="mobile-menu-toggle" @click="isMobileMenuOpen = !isMobileMenuOpen">
+        <button 
+          class="mobile-menu-toggle" 
+          @click="isMobileMenuOpen = !isMobileMenuOpen"
+          :aria-expanded="isMobileMenuOpen"
+          aria-controls="mobile-menu"
+          :aria-label="t('ariaMobileMenu')"
+        >
           <span></span>
           <span></span>
           <span></span>
@@ -83,11 +90,17 @@ onUnmounted(() => {
       </div>
     </div>
 
-    <div :class="['mobile-menu', { open: isMobileMenuOpen }]">
+    <div 
+      id="mobile-menu"
+      :class="['mobile-menu', { open: isMobileMenuOpen }]"
+      role="menu"
+      aria-hidden="!isMobileMenuOpen"
+    >
       <a 
         v-for="link in navLinks" 
         :key="link.name" 
-        :href="link.href" 
+        href="#" 
+        role="menuitem"
         :class="{ active: activeSection === link.id }"
         @click="handleLinkClick($event, link.href)"
       >{{ link.name }}</a>

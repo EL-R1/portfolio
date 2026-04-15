@@ -7,13 +7,22 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "deploy": "npm run build && gh-pages -d dist"
+    "deploy": "npm run build && gh-pages -d dist",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "typecheck": "vue-tsc --noEmit"
   },
   "dependencies": {
     "vue": "^3.4.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.0",
-    "vite": "^5.0.0"
+    "@vue/tsconfig": "^0.5.1",
+    "happy-dom": "^20.9.0",
+    "jsdom": "^27.0.1",
+    "typescript": "~5.4.0",
+    "vite": "^5.0.0",
+    "vitest": "^1.4.0",
+    "vue-tsc": "^2.0.0"
   }
 }

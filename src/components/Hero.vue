@@ -76,14 +76,16 @@ const resetTilt = (e) => {
 </script>
 
 <template>
-  <section id="hero" class="hero">
+  <section id="hero" class="hero" aria-labelledby="hero-title">
     <div class="container">
       <div class="hero-content">
-        <span class="greeting">{{ t('greeting') }}</span>
-        <h1 class="name" @mousemove="updateTilt" @mouseleave="resetTilt">{{ name }}</h1>
-        <h2 class="title">{{ currentTitle }}<span class="cursor">|</span></h2>
+        <span class="greeting" aria-live="polite">{{ t('greeting') }}</span>
+        <h1 id="hero-title" class="name" @mousemove="updateTilt" @mouseleave="resetTilt" aria-label="Erwan LEBLANC">{{ name }}</h1>
+        <h2 class="title" aria-live="polite" aria-atomic="true">
+          {{ currentTitle }}<span class="cursor" aria-hidden="true">|</span>
+        </h2>
         <p class="tagline">{{ t('tagline') }}</p>
-        <div class="cta-buttons">
+        <div class="cta-buttons" role="group" :aria-label="t('ariaMainActions')">
           <a href="#projects" class="btn btn-primary">{{ t('viewProjects') }}</a>
           <a href="#about" class="btn btn-outline">{{ t('about') }}</a>
         </div>

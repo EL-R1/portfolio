@@ -9,11 +9,14 @@ import Footer from './components/Footer.vue'
 </script>
 
 <template>
+  <a href="#main-content" class="skip-link">Aller au contenu principal</a>
   <Navbar />
-  <Hero />
-  <About />
-  <Skills />
-  <Projects />
-  <Resume />
+  <main id="main-content">
+    <Hero />
+    <About />
+    <Skills />
+    <Projects />
+    <Resume />
+  </main>
   <Footer />
 </template>
