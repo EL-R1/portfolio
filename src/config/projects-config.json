@@ -1,0 +1,126 @@
+{
+  "githubUsername": "EL-R1",
+  "excludeRepos": ["EL-R1"],
+  "groups": [
+    {
+      "id": "poc-banking",
+      "title": "POC Banking (Design Patterns)",
+      "description": "POC d'un système API de banque basic sous différents design pattern (MVC, MVVM, DDD, Architecture Hexagonale)",
+      "tags": ["Design Patterns", "TDD"],
+      "repos": [
+        "BankingKata",
+        "BankingKata-DDD",
+        "BankingKata-MVC",
+        "BankingKata-MVVM",
+        "BankingKata-MVC-Java",
+        "BankingKata-MVC-Symfony"
+      ]
+    }
+  ],
+  "overrides": {
+    "tampermonkey-scripts": {
+      "title": "Tampermonkey Scripts",
+      "description": "Scripts pour ajouter des fonctionnalités sur des sites quotidiens.",
+      "tags": ["JavaScript", "Tampermonkey"]
+    },
+    "utils-subs": {
+      "title": "Utils-Subs",
+      "description": "Utilitaires pour la gestion de sous-titres de médias.",
+      "tags": ["Python", "FFmpeg"]
+    },
+    "reverse-services": {
+      "title": "Reverse Services",
+      "description": "Reverse de sites web pour voir comment ils fonctionnaient.",
+      "tags": ["Python", "Web Scraping"]
+    },
+    "jellyfin-userdata-viewer": {
+      "title": "Jellyfin Userdata Viewer",
+      "tags": ["HTML", "Jellyfin"]
+    },
+    "pathe-monitor": {
+      "title": "Pathé Monitor",
+      "tags": ["Python", "Web Scraping"]
+    },
+    "youtube-comment-monitor": {
+      "title": "YouTube Comment Monitor",
+      "tags": ["Python", "YouTube API"]
+    },
+    "demineur": {
+      "title": "Démineur",
+      "tags": ["JavaScript", "Game"]
+    },
+    "Projet-Pokedex": {
+      "title": "Pokédex",
+      "tags": ["Python"]
+    },
+    "BidCardCoin": {
+      "title": "BidCardCoin",
+      "tags": ["C#"]
+    },
+    "API-Login": {
+      "title": "API Login",
+      "tags": ["Python", "Flask"]
+    },
+    "Test-technique-humansix": {
+      "title": "Test Technique Humansix",
+      "tags": ["PHP", "Symfony"]
+    },
+    "BCC": {
+      "title": "BCC",
+      "tags": []
+    },
+    "bpmn2": {
+      "title": "BPMN2",
+      "tags": []
+    },
+    "portfolio": {
+      "title": "Portfolio Vue.js",
+      "description": "Ce portfolio ! Développé avec Vue.js, responsive avec thème sombre/clair",
+      "tags": ["Vue.js", "Vite", "CSS"],
+      "links": [
+        { "text": "GitHub", "url": "https://github.com/EL-R1/portfolio" },
+        { "text": "Live", "url": "https://el-r1.github.io/portfolio" }
+      ]
+    }
+  },
+  "contributionsOverrides": {
+    "BandersnatchInteractive": {
+      "title": "BandersnatchInteractive",
+      "description": "Bandersnatch Interactive Player (based on html5 video player)",
+      "tags": ["JavaScript", "HTML5", "Video"],
+      "links": [
+        { "text": "PR #40", "url": "https://github.com/mehotkhan/BandersnatchInteractive/pull/40" },
+        { "text": "Repo", "url": "https://github.com/mehotkhan/BandersnatchInteractive" }
+      ]
+    },
+    "MegaLinkChecker": {
+      "title": "MegaLinkChecker",
+      "description": "Python based tool to check if mega.nz shared link is dead or not",
+      "tags": ["Python", "Mega.nz"]
+    },
+    "mcu-flowchart": {
+      "title": "MCU Flowchart",
+      "tags": ["TypeScript", "Marvel"]
+    },
+    "gofile-dl": {
+      "title": "Gofile Downloader",
+      "tags": ["Python"]
+    }
+  },
+  "externalProjects": [
+    {
+      "id": "home-lab",
+      "title": "Home Lab",
+      "description": "Mise en place de différents services multimédias pour le quotidien.",
+      "tags": ["Docker", "Media Server"],
+      "links": [
+        { "text": "Jellyfin", "url": "https://github.com/jellyfin/jellyfin" },
+        { "text": "Sonarr", "url": "https://github.com/Sonarr/Sonarr" },
+        { "text": "Radarr", "url": "https://github.com/Radarr/Radarr" },
+        { "text": "Prowlarr", "url": "https://github.com/Prowlarr/Prowlarr" },
+        { "text": "Overseerr", "url": "https://github.com/sct/overseerr" },
+        { "text": "Homepage", "url": "https://github.com/gethomepage/homepage" }
+      ]
+    }
+  ]
+}

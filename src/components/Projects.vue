@@ -2,6 +2,7 @@
 import { ref, computed } from 'vue'
 import ProjectDetail from './ProjectDetail.vue'
 import { useI18n } from '../composables/useI18n'
+import projectsData from '../data/personal-projects.json'
 
 const { t } = useI18n()
 const selectedProject = ref(null)
@@ -42,6 +43,10 @@ const getProjectData = (proj) => {
 }
 
 const translatedProjects = computed(() => projects.map(p => getProjectData(p)))
+
+const ownProjects = computed(() => projectsData.own || [])
+const conceptsProjects = computed(() => projectsData.concepts || [])
+const contributionsProjects = computed(() => projectsData.contributions || [])
 
 const projects = [
   {
@@ -172,96 +177,6 @@ const projects = [
   }
 ]
 
-const personalProjects = [
-  {
-    title: 'POC Banking (Design Patterns)',
-    description: "POC d'un système API de banque basic sous différents design pattern (MVC, MVVM, DDD, Architecture Hexagonale)",
-    tags: ['C#', 'Design Patterns', 'TDD'],
-    links: [
-      { text: 'BankingKata', url: 'https://github.com/EL-R1/BankingKata' },
-      { text: 'BankingKata-DDD', url: 'https://github.com/EL-R1/BankingKata-DDD' },
-      { text: 'BankingKata-MVVM', url: 'https://github.com/EL-R1/BankingKata-MVVM' },
-      { text: 'BankingKata-MVC', url: 'https://github.com/EL-R1/BankingKata-MVC' }
-    ]
-  },
-  {
-    title: 'Home Lab',
-    description: "Mise en place de différents services multimédias pour le quotidien.",
-    tags: ['Docker', 'Media Server'],
-    links: [
-      { text: 'Jellyfin', url: 'https://github.com/jellyfin/jellyfin' },
-      { text: 'Sonarr', url: 'https://github.com/Sonarr/Sonarr' },
-      { text: 'Radarr', url: 'https://github.com/Radarr/Radarr' },
-      { text: 'Prowlarr', url: 'https://github.com/prowlarr/prowlarr' },
-      { text: 'Seerr', url: 'https://github.com/seerr-team/seerr' },
-      { text: 'Homepage', url: 'https://github.com/gethomepage/homepage' }
-    ]
-  },
-  {
-    title: 'Reverse Services',
-    description: "Reverse de sites web pour voir comment ils fonctionnaient.",
-    tags: ['Python', 'Web Scraping'],
-    link: 'https://github.com/EL-R1/reverse-services'
-  },
-  {
-    title: 'Utils-Subs',
-    description: "Utilitaires pour la gestion de sous-titres de médias.",
-    tags: ['Python', 'FFmpeg'],
-    link: 'https://github.com/EL-R1/utils-subs'
-  },
-  {
-    title: 'Tampermonkey Scripts',
-    description: "Scripts pour ajouter des fonctionnalités sur des sites quotidiens.",
-    tags: ['JavaScript', 'Tampermonkey'],
-    link: 'https://github.com/EL-R1/tampermonkey-scripts'
-  },
-  {
-    title: 'BandersnatchInteractive',
-    description: "Bandersnatch Interactive Player (based on html5 video player)",
-    tags: ['JavaScript', 'HTML5', 'Video'],
-    links: [
-      { text: 'PR #40', url: 'https://github.com/mehotkhan/BandersnatchInteractive/pull/40' },
-      { text: 'Repo', url: 'https://github.com/mehotkhan/BandersnatchInteractive' }
-    ]
-  },
-  {
-    title: 'MegaLinkChecker',
-    description: "Python based tool to check if mega.nz shared link is dead or not",
-    tags: ['Python', 'Mega.nz'],
-    link: 'https://github.com/EL-R1/MegaLinkChecker'
-  },
-  {
-    title: 'Portfolio Vue.js',
-    description: "Ce portfolio ! Développé avec Vue.js, responsive avec thème sombre/clair",
-    tags: ['Vue.js', 'Vite', 'CSS'],
-    links: [
-      { text: 'GitHub', url: 'https://github.com/EL-R1/portfolio' },
-      { text: 'Live', url: 'https://el-r1.github.io/portfolio' }
-    ]
-  }
-]
-
-const personalProjectsData = computed(() => {
-  const keyMap = {
-    'POC Banking (Design Patterns)': 'projPocBanking',
-    'Home Lab': 'projHomeLab',
-    'Reverse Services': 'projReverseServices',
-    'Utils-Subs': 'projUtilsSubs',
-    'Tampermonkey Scripts': 'projTampermonkey',
-    'BandersnatchInteractive': 'projBandersnatch',
-    'MegaLinkChecker': 'projMegaLinkChecker',
-    'Portfolio Vue.js': 'projPortfolio'
-  }
-  return personalProjects.map(proj => {
-    const key = keyMap[proj.title]
-    if (!key) return proj
-    return {
-      ...proj,
-      description: t(key + 'Desc')
-    }
-  })
-})
-
 const openDetail = (project) => {
   selectedProject.value = getProjectData(project)
 }
@@ -292,9 +207,51 @@ const closeDetail = () => {
         </div>
       </div>
 
-      <h2 class="section-title personal-title">{{ t('personalProjects') }} <span class="period">(2024-2026)</span></h2>
+      <h2 v-if="conceptsProjects.length" class="section-title personal-title">{{ t('concepts') }}</h2>
+      <div v-if="conceptsProjects.length" class="projects-grid">
+        <div v-for="project in conceptsProjects" :key="project.id" class="project-card personal">
+          <div class="project-content">
+            <h3 class="project-title">{{ project.title }}</h3>
+            <p class="project-description">{{ project.description }}</p>
+            <div class="project-tags">
+              <span v-for="tag in project.tags" :key="tag">{{ tag }}</span>
+            </div>
+            <div v-if="project.links" class="project-links">
+              <a v-for="link in project.links" :key="link.text" :href="link.url" target="_blank" rel="noopener" class="link-tag">
+                {{ link.text }}
+              </a>
+            </div>
+            <a v-else-if="project.link" :href="project.link" target="_blank" rel="noopener" class="project-link">
+              {{ t('viewLink') }} →
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <h2 class="section-title personal-title">{{ t('personalProjects') }}</h2>
       <div class="projects-grid">
-        <div v-for="project in personalProjectsData" :key="project.title" class="project-card personal">
+        <div v-for="project in ownProjects" :key="project.id" class="project-card personal">
+          <div class="project-content">
+            <h3 class="project-title">{{ project.title }}</h3>
+            <p class="project-description">{{ project.description }}</p>
+            <div class="project-tags">
+              <span v-for="tag in project.tags" :key="tag">{{ tag }}</span>
+            </div>
+            <div v-if="project.links" class="project-links">
+              <a v-for="link in project.links" :key="link.text" :href="link.url" target="_blank" rel="noopener" class="link-tag">
+                {{ link.text }}
+              </a>
+            </div>
+            <a v-else-if="project.link" :href="project.link" target="_blank" rel="noopener" class="project-link">
+              {{ t('viewLink') }} →
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <h2 v-if="contributionsProjects.length" class="section-title personal-title">{{ t('contributions') }}</h2>
+      <div v-if="contributionsProjects.length" class="projects-grid">
+        <div v-for="project in contributionsProjects" :key="project.id" class="project-card personal">
           <div class="project-content">
             <h3 class="project-title">{{ project.title }}</h3>
             <p class="project-description">{{ project.description }}</p>
