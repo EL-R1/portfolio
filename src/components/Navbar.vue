@@ -13,13 +13,14 @@ const navLinks = computed(() => [
   { name: t('about'), href: '#about', id: 'about' },
   { name: t('skillsTitle'), href: '#skills', id: 'skills' },
   { name: t('projectsTitle'), href: '#projects', id: 'projects' },
+  { name: t('cvNavLabel'), href: '#cv', id: 'cv' },
   { name: t('experienceTitle').split(' & ')[0], href: '#resume', id: 'resume' }
 ])
 
 const handleScroll = () => {
   isScrolled.value = window.scrollY > 50
   
-  const sections = ['hero', 'about', 'skills', 'projects', 'resume']
+  const sections = ['hero', 'about', 'skills', 'projects', 'cv', 'resume']
   for (const id of sections) {
     const el = document.getElementById(id)
     if (el) {

@@ -4,6 +4,7 @@ import Hero from './components/Hero.vue'
 import About from './components/About.vue'
 import Skills from './components/Skills.vue'
 import Projects from './components/Projects.vue'
+import CvSection from './components/CvSection.vue'
 import Resume from './components/Resume.vue'
 import Footer from './components/Footer.vue'
 </script>
@@ -16,6 +17,7 @@ import Footer from './components/Footer.vue'
     <About />
     <Skills />
     <Projects />
+    <CvSection />
     <Resume />
   </main>
   <Footer />
