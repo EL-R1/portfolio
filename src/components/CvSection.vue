@@ -58,6 +58,12 @@ const pdfName = computed(() =>
   lang.value === 'fr' ? 'CV-Erwan-LEBLANC.pdf' : 'Resume-Erwan-LEBLANC.pdf'
 )
 
+const docxHref = computed(() => `${import.meta.env.BASE_URL}cv-${lang.value}.docx`)
+
+const docxName = computed(() =>
+  lang.value === 'fr' ? 'CV-Erwan-LEBLANC.docx' : 'Resume-Erwan-LEBLANC.docx'
+)
+
 const downloadMarkdown = () => {
   const blob = new Blob([cvSource.value], { type: 'text/markdown;charset=utf-8' })
   const url = URL.createObjectURL(blob)
@@ -79,6 +85,9 @@ const downloadMarkdown = () => {
       <div class="cv-actions">
         <a class="cv-btn cv-btn-primary" :href="pdfHref" :download="pdfName">{{
           t('cvDownloadPdf')
+        }}</a>
+        <a class="cv-btn cv-btn-outline" :href="docxHref" :download="docxName">{{
+          t('cvDownloadDocx')
         }}</a>
         <button class="cv-btn cv-btn-outline" @click="downloadMarkdown">{{ t('cvDownloadMd') }}</button>
       </div>
