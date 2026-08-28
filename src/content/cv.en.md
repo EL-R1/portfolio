@@ -2,9 +2,9 @@
   CV displayed in the #cv section of the portfolio.
   Edit this file freely (markdown): the site and downloads update automatically.
 -->
-# Erwan LEBLANC
+# Full Stack Developer
 
-## Full Stack Developer
+## Erwan LEBLANC
 
 [Nantes, France](https://www.openstreetmap.org/search?query=Nantes) · [github.com/EL-R1](https://github.com/EL-R1)
 
