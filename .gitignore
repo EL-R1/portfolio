@@ -27,3 +27,6 @@ dist-ssr
 src/data/personal-projects.json
 public/cv-fr.pdf
 public/cv-en.pdf
+public/cv-fr.docx
+public/cv-en.docx
+private/
