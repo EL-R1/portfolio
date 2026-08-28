@@ -6,8 +6,9 @@ import { fileURLToPath } from 'node:url'
 import puppeteer from 'puppeteer-core'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
-const DIST_DIR = path.resolve(__dirname, '..', 'dist')
-const PUBLIC_DIR = path.resolve(__dirname, '..', 'public')
+const ROOT = path.resolve(__dirname, '..')
+const DIST_DIR = path.join(ROOT, 'dist')
+const PUBLIC_DIR = path.join(ROOT, 'public')
 const BASE_PATH = '/portfolio/'
 const PORT = 4173
 
@@ -133,11 +134,20 @@ async function main() {
     try {
       await mkdir(PUBLIC_DIR, { recursive: true })
 
-      await generatePdfForLang(browser, url, path.join(DIST_DIR, 'cv-fr.pdf'), 'fr')
-      await copyFile(path.join(DIST_DIR, 'cv-fr.pdf'), path.join(PUBLIC_DIR, 'cv-fr.pdf'))
+      // Skip si source manquante (ex: pas de cv.en.md → pas de cv-en.pdf)
+      if (existsSync(path.join(ROOT, 'src', 'content', 'cv.fr.md'))) {
+        await generatePdfForLang(browser, url, path.join(DIST_DIR, 'cv-fr.pdf'), 'fr')
+        await copyFile(path.join(DIST_DIR, 'cv-fr.pdf'), path.join(PUBLIC_DIR, 'cv-fr.pdf'))
+      } else {
+        console.warn('[generate-cv-pdf] Source introuvable: src/content/cv.fr.md — skip fr')
+      }
 
-      await generatePdfForLang(browser, url, path.join(DIST_DIR, 'cv-en.pdf'), 'en')
-      await copyFile(path.join(DIST_DIR, 'cv-en.pdf'), path.join(PUBLIC_DIR, 'cv-en.pdf'))
+      if (existsSync(path.join(ROOT, 'src', 'content', 'cv.en.md'))) {
+        await generatePdfForLang(browser, url, path.join(DIST_DIR, 'cv-en.pdf'), 'en')
+        await copyFile(path.join(DIST_DIR, 'cv-en.pdf'), path.join(PUBLIC_DIR, 'cv-en.pdf'))
+      } else {
+        console.warn('[generate-cv-pdf] Source introuvable: src/content/cv.en.md — skip en')
+      }
     } finally {
       await browser.close()
     }
